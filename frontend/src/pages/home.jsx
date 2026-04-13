@@ -26,10 +26,22 @@ const Home = () => {
     <div className="home-page">
       <div className="home-shell">
         <header className="masthead">
-          <div className="masthead-topline">MULTI SOURCE JOB SEARCH</div>
-          <h1 className="brand">Jobs++</h1>
-          
-        </header>
+
+  <div className="masthead-inner">
+
+    <div className="masthead-left">
+      <div className="masthead-topline">MULTI SOURCE JOB SEARCH</div>
+      <h1 className="brand">Jobs++</h1>
+    </div>
+
+    <div className="masthead-right">
+      <button className="auth-button sign-in">Sign In</button>
+      <button className="auth-button sign-up">Sign Up</button>
+    </div>
+
+  </div>
+
+</header>
 
         <section className="search-panel">
           <div className="panel-header">
