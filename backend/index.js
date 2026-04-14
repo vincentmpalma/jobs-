@@ -3,7 +3,7 @@ import cors from 'cors'
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:5173/"]
+  origin: ["http://localhost:5173"]
 }
 
 app.use(cors(corsOptions))
@@ -29,10 +29,16 @@ app.get('/jobs', async (req, res)=>{
       }
 
       const arebeitnowData = await arebeitnowURes.json()
-      const data = arebeitnowData.data
-      console.log(data)
+      let data = arebeitnowData.data
+
+      if (title) {
+      data = data.filter(job =>
+        job.title.toLowerCase().includes(title.toLowerCase())
+      );
+    }
+    console.log(data)
       
-      res.status(200).json({message:"jobs placeholder"})
+    res.status(200).json({data})
 
   } catch (e){
     res.status(500).json({message: `Error code 500 - something went wrong: ${e}`})

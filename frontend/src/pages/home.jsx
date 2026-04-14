@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import currencies from '../../data/currencies.json';
 import Select from 'react-select';
+import { useNavigate } from "react-router-dom";
 
 const currencyOptions = Object.values(currencies).map(currency => ({
   value: currency.code,
@@ -13,6 +14,8 @@ const Home = () => {
   const [isRemote, setIsRemote] = useState("");
   const [currency, setCurrency] = useState(null);
 
+  const navigate = useNavigate();
+
   const submitSearch = (e) => {
     e.preventDefault();
     console.log("in submitSearch");
@@ -20,6 +23,8 @@ const Home = () => {
     console.log(`location: ${location}`);
     console.log(`isRemote: ${isRemote}`);
     console.log(`currency: ${currency?.value}`);
+
+    navigate(`/search?title=${title}`)
   };
 
   return (
