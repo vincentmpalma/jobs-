@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import currencies from '../../data/currencies.json';
 import Select from 'react-select';
 import { useNavigate } from "react-router-dom";
+import Access from './Access';
 
 const currencyOptions = Object.values(currencies).map(currency => ({
   value: currency.code,
@@ -40,8 +41,8 @@ const Home = () => {
     </div>
 
     <div className="masthead-right">
-      <button className="auth-button sign-in">Sign In</button>
-      <button className="auth-button sign-up">Sign Up</button>
+      <button className="auth-button sign-in" onClick={()=>navigate('/access')}>Sign In</button>
+      <button className="auth-button sign-up" onClick={()=>navigate('/access')}>Sign Up</button>
     </div>
 
   </div>
