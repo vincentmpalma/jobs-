@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:jobright.ai)",
+      "WebFetch(domain:www.linkedin.com)",
+      "WebFetch(domain:brand.linkedin.com)",
+      "WebFetch(domain:mobbin.com)",
+      "WebFetch(domain:brandpalettes.com)",
+      "WebFetch(domain:www.designpieces.com)",
+      "WebFetch(domain:www.subframe.com)",
+      "WebFetch(domain:www.jobboardly.com)"
+    ]
+  }
+}

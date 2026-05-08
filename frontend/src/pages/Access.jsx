@@ -18,8 +18,9 @@ const Access = () => {
     <div className="access-page">
       <div className="access-left">
         <div className="access-left-inner">
-          <div className="access-topline">MULTI SOURCE JOB SEARCH</div>
+          <div className="access-meta">Multi-Source Job Search &middot; Est. 2025</div>
           <h1 className="access-title">Jobs++</h1>
+          <div className="access-topline">"All the jobs fit to apply"</div>
         </div>
       </div>
 
@@ -27,6 +28,7 @@ const Access = () => {
         <div className="access-right-inner">
           <div className="access-kicker">Access</div>
           <h2 className="access-subtitle">Sign up/in</h2>
+          <div className="access-divider"></div>
 
           <button
             className="google-button"

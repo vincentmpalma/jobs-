@@ -51,11 +51,20 @@ app.get('/jobs', async (req, res)=>{
       }
     });
     const usaJobData = await usaJobsRes.json();
-    console.log(usaJobData)
-       
 
-    
-    res.status(200).json({usaJobData})
+    const usaJobs = (usaJobData?.SearchResult?.SearchResultItems ?? []).map(item => {
+      const d = item.MatchedObjectDescriptor;
+      return {
+        slug: item.MatchedObjectId,
+        title: d.PositionTitle,
+        company_name: d.OrganizationName,
+        location: d.PositionLocation?.[0]?.LocationName ?? '',
+        description: d.QualificationSummary ?? '',
+        url: d.ApplyURI?.[0] ?? d.PositionURI ?? ''
+      };
+    });
+
+    res.status(200).json({ data: [...data, ...usaJobs] })
 
   } catch (e){
     res.status(500).json({message: `Error code 500 - something went wrong: ${e}`})

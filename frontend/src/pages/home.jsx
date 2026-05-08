@@ -1,154 +1,96 @@
 import React, { useState } from 'react';
 import currencies from '../../data/currencies.json';
 import Select from 'react-select';
-import { useNavigate } from "react-router-dom";
-import Access from './Access';
+import { useNavigate } from 'react-router-dom';
+import Masthead from '../components/Masthead';
 
-const currencyOptions = Object.values(currencies).map(currency => ({
-  value: currency.code,
-  label: `${currency.code} - ${currency.name}`
+const currencyOptions = Object.values(currencies).map(c => ({
+  value: c.code,
+  label: `${c.code} — ${c.name}`
 }));
 
 const Home = () => {
-  const [title, setTitle] = useState("");
-  const [location, setLocation] = useState("");
-  const [isRemote, setIsRemote] = useState("");
+  const [title, setTitle] = useState('');
+  const [location, setLocation] = useState('');
+  const [isRemote, setIsRemote] = useState('include');
   const [currency, setCurrency] = useState(null);
 
   const navigate = useNavigate();
 
   const submitSearch = (e) => {
     e.preventDefault();
-    console.log("in submitSearch");
-    console.log(`title: ${title}`);
-    console.log(`location: ${location}`);
-    console.log(`isRemote: ${isRemote}`);
-    console.log(`currency: ${currency?.value}`);
-
-    navigate(`/search?title=${title}`)
+    navigate(`/search?title=${title}`);
   };
 
   return (
     <div className="home-page">
-      <div className="home-shell">
-        <header className="masthead">
+      <Masthead />
 
-  <div className="masthead-inner">
+      <div className="hero-section">
+        <div className="hero-text">
+          <h1 className="hero-headline">Find your next<br />opportunity.</h1>
+          <p className="hero-sub">Search thousands of listings across top job boards — all in one place.</p>
+        </div>
 
-    <div className="masthead-left">
-      <div className="masthead-topline">MULTI SOURCE JOB SEARCH</div>
-      <h1 className="brand">Jobs++</h1>
-    </div>
-
-    <div className="masthead-right">
-      <button className="auth-button sign-in" onClick={()=>navigate('/access')}>Sign In</button>
-      <button className="auth-button sign-up" onClick={()=>navigate('/access')}>Sign Up</button>
-    </div>
-
-  </div>
-
-</header>
-
-        <section className="search-panel">
-          <div className="panel-header">
-            <span className="panel-kicker">SEARCH</span>
-            <h2 className="panel-title">query</h2>
+        <form className="search-bar-form" onSubmit={submitSearch}>
+          <div className="search-bar">
+            <input
+              className="search-input"
+              type="text"
+              placeholder="Job title or keyword"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <div className="search-bar-divider" />
+            <input
+              className="search-input"
+              type="text"
+              placeholder="City, state, or remote"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              disabled={isRemote === 'only'}
+            />
+            <button className="search-bar-btn" type="submit">Search</button>
           </div>
 
-          <form onSubmit={submitSearch} className="search-form">
-            <div className="form-group">
-              <label className="form-label">Job Title</label>
-              <input
-                className="text-input"
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Location</label>
-              <input
-                className="text-input"
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                disabled={isRemote === 'only'}
-             
-              />
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Remote Preference</label>
-
-              <div className="radio-row">
-                <label className="radio-option">
+          <div className="filter-row">
+            <div className="filter-chips">
+              {[
+                { value: 'include', label: 'All Jobs' },
+                { value: 'only',    label: 'Remote'   },
+                { value: 'exclude', label: 'On-site'  },
+              ].map(({ value, label }) => (
+                <label key={value} className="filter-chip">
                   <input
                     type="radio"
                     name="remote"
-                    value="include"
-                    onChange={(e) => setIsRemote(e.target.value)}
-                  />
-                  <span>Include Remote</span>
-                </label>
-
-                <label className="radio-option">
-                  <input
-                    type="radio"
-                    name="remote"
-                    value="exclude"
-                    onChange={(e) => setIsRemote(e.target.value)}
-                  />
-                  <span>Exclude Remote</span>
-                </label>
-
-                <label className="radio-option">
-                  <input
-                    type="radio"
-                    name="remote"
-                    value="only"
+                    value={value}
+                    checked={isRemote === value}
                     onChange={(e) => {
                       setIsRemote(e.target.value);
-                      setLocation("");
+                      if (e.target.value === 'only') setLocation('');
                     }}
                   />
-                  <span>Remote Only</span>
+                  <span>{label}</span>
                 </label>
-              </div>
+              ))}
             </div>
 
-            <div className="salary-block">
-              <div className="form-group">
-                <label className="form-label">Currency</label>
-                <Select
-                  options={currencyOptions}
-                  value={currency}
-                  onChange={(selectedOption) => setCurrency(selectedOption)}
-                  className="currency-select"
-                  classNamePrefix="jobs-select"
-                />
-              </div>
-
-              <div className="salary-row">
-                <div className="form-group salary-field">
-                  <label className="form-label">Low</label>
-                  <input className="text-input" type="number" />
-                </div>
-
-                <div className="salary-divider">to</div>
-
-                <div className="form-group salary-field">
-                  <label className="form-label">High</label>
-                  <input className="text-input" type="number" />
-                </div>
-              </div>
+            <div className="salary-compact">
+              <Select
+                options={currencyOptions}
+                value={currency}
+                onChange={setCurrency}
+                placeholder="Currency"
+                className="salary-select"
+                classNamePrefix="csel"
+              />
+              <input className="salary-input" type="number" placeholder="Min" />
+              <span className="salary-sep">—</span>
+              <input className="salary-input" type="number" placeholder="Max" />
             </div>
-
-            <button className="search-button" type="submit">
-              Search
-            </button>
-          </form>
-        </section>
+          </div>
+        </form>
       </div>
     </div>
   );
