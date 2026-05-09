@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import '../../css/Search.css';
 import Masthead from '../components/Masthead';
+import Modal from '../components/Modal';
 
 const AVATAR_COLORS = [
   { bg: '#EEF2FF', fg: '#4F46E5' },
@@ -28,11 +29,23 @@ const Search = () => {
   const [searchParams] = useSearchParams();
   const [jobsList, setJobList] = useState([]);
   const [expanded, setExpanded] = useState({});
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
 
   const toggleExpand = (slug) =>
     setExpanded(prev => ({ ...prev, [slug]: !prev[slug] }));
 
   const title = searchParams.get('title');
+
+  const openModal = (job) => {
+    setSelectedJob(job);
+    setModalOpen(true);
+  };
+
+  const onClose = () => {
+    setModalOpen(false);
+    setSelectedJob(null);
+  };
 
   useEffect(() => {
     const searchJobs = async () => {
@@ -61,6 +74,8 @@ const Search = () => {
             }
           </h1>
         </div>
+
+        <Modal isOpen={modalOpen} onClose={onClose} job={selectedJob} />
 
         <div className="job-grid">
           {jobsList.map((job) => {
@@ -97,6 +112,9 @@ const Search = () => {
                 </button>
 
                 <div className="job-card-footer">
+                  <button className="view-details-btn" onClick={() => openModal(job)}>
+                    View Details
+                  </button>
                   <a className="job-apply-btn" href={job.url} target="_blank" rel="noreferrer">
                     Apply →
                   </a>
