@@ -51,6 +51,31 @@ body {
   display: block;
 }
 
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.nav-username {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
 .nav-brand {
   font-family: 'Abril Fatface', serif;
   font-size: 1.5rem;

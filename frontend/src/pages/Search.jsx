@@ -62,8 +62,8 @@ const Search = () => {
 
   return (
     <div className="search-page">
+      <Masthead />
       <div className="search-shell">
-        <Masthead />
 
         <div className="results-header">
           <p className="results-kicker">Search Results</p>

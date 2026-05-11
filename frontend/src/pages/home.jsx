@@ -28,8 +28,7 @@ const Home = () => {
 
       <div className="hero-section">
         <div className="hero-text">
-          <h1 className="hero-headline">Find your next<br />opportunity.</h1>
-          <p className="hero-sub">Search thousands of listings across top job boards — all in one place.</p>
+          <h1 className="hero-headline">Find jobs.</h1>
         </div>
 
         <form className="search-bar-form" onSubmit={submitSearch}>
