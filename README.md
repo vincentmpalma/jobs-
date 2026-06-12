@@ -1,103 +1,95 @@
 # Jobs++
 
-A full-stack job aggregation platform that allows users to search job listings from multiple sources in a single interface.
-
-## Overview
-
-Jobs++ is a personal project focused on building a scalable and user-friendly job search experience. The goal is to aggregate job postings from multiple APIs and present them in a clean, structured format with filtering and personalization features.
+A job search app that aggregates listings from multiple sources into one place.
 
 ## Features
 
-- Search jobs by title  
-- Dynamic job results rendering  
-- Expandable job descriptions ("View More / View Less")  
-- Direct links to original job postings  
-- Salary range inputs (UI implemented)
+- Search jobs by title across multiple APIs
+- Expandable job descriptions with a full detail modal
+- Filter by remote, on-site, or all jobs
+- Google authentication via Firebase
+- Direct apply links for each listing
 
 ## Tech Stack
 
-**Frontend**
-- React
-- React Router
-- CSS
+**Frontend** — React, React Router, Firebase Auth, CSS
 
-**Backend**
-- Node.js
-- Express
+**Backend** — Node.js, Express
 
-**Other**
-- REST APIs
-- Fetch API
-- CORS
-
-## Architecture
-
-The application follows a client-server architecture:
-
-- The React frontend handles user input, routing, and rendering job data  
-- The Express backend exposes API endpoints (e.g., `/jobs?title=...`)  
-- The backend acts as an intermediary between the frontend and external job APIs  
-- Data is fetched asynchronously and displayed dynamically in the UI  
-
-## Current Status
-
-This project is actively being developed.
-
-**Current implementation:**
-- Frontend search flow and results page  
-- Backend endpoint returning job data  
-- UI components for interacting with job listings  
-
-## Planned Improvements
-
-- Integrate multiple external job APIs to expand available listings  
-- Add advanced filtering (location, remote preference, salary, etc.)  
-- Implement user authentication using Firebase and MongoDB  
-- Allow users to save jobs and store search preferences  
-- Build an AI-powered feature to recommend jobs based on user preferences  
+**APIs** — Arbeitnow, USAJobs
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js  
-- npm or yarn  
+- Node.js
+- A [USAJobs API account](https://developer.usajobs.gov/apirequest/)
+- A [Firebase project](https://console.firebase.google.com/) with Google Authentication enabled
 
-### Installation
+### Environment Setup
+
+**Backend — create `/backend/.env`**
+
+Go to https://developer.usajobs.gov/apirequest/ and request an API key. You'll receive the key at the email you register with.
+
+```
+USA_JOBS_API_KEY=your_api_key_here
+USER_AGENT_EMAIL=the_email_you_registered_with
+```
+
+**Frontend — create `/frontend/.env`**
+
+Go to https://console.firebase.google.com/ and create a new project. Then:
+
+1. Go to **Authentication** → **Sign-in method** and enable **Google**
+2. Go to **Project Settings** → **Your apps** and register a web app
+3. Copy the config values into a `.env` file inside the `frontend` folder:
+
+```
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project_id.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+```
+
+### Running Locally
+
+**1. Clone the repo**
 
 ```bash
 git clone https://github.com/vincentmpalma/jobs-.git
 cd jobs-
 ```
 
-# Project Setup
+**2. Set up both `.env` files** as described above.
 
-## Backend
+**3. Start the backend**
+
 ```bash
 cd backend
 npm install
 node index.js
 ```
 
-## Frontend
+**4. Start the frontend** (new terminal)
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-## Local Development
-
 | Service  | URL |
 |----------|-----|
 | Frontend | http://localhost:5173 |
 | Backend  | http://localhost:8080 |
 
-## Example API Endpoint
+## Roadmap
 
-```
-GET /jobs?title=software
-```
+Check the [GitHub Issues](../../issues) tab for bugs and planned features.
 
 ## Author
 

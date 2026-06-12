@@ -4,6 +4,7 @@ import '../../css/Search.css';
 import Masthead from '../components/Masthead';
 import Modal from '../components/Modal';
 
+// color pairs used to generate consistent avatars per company name
 const AVATAR_COLORS = [
   { bg: '#EEF2FF', fg: '#4F46E5' },
   { bg: '#FEF9C3', fg: '#CA8A04' },
@@ -14,11 +15,13 @@ const AVATAR_COLORS = [
   { bg: '#F3E8FF', fg: '#9333EA' },
 ];
 
+// pick a color pair based on the first char of the company name
 function avatarColor(name) {
   const idx = Math.abs(((name || '?').charCodeAt(0) - 65)) % AVATAR_COLORS.length;
   return AVATAR_COLORS[idx];
 }
 
+// job descriptions sometimes come back as html, this strips the tags for the preview
 function stripHtml(html) {
   const div = document.createElement('div');
   div.innerHTML = html;
@@ -28,6 +31,7 @@ function stripHtml(html) {
 const Search = () => {
   const [searchParams] = useSearchParams();
   const [jobsList, setJobList] = useState([]);
+  // tracks which job cards are expanded to show full description
   const [expanded, setExpanded] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -47,6 +51,7 @@ const Search = () => {
     setSelectedJob(null);
   };
 
+  // fetch jobs from the backend on mount using the title from the url
   useEffect(() => {
     const searchJobs = async () => {
       try {
@@ -81,12 +86,12 @@ const Search = () => {
           {jobsList.map((job) => {
             const { bg, fg } = avatarColor(job.company_name);
             const isRemote = job.location?.toLowerCase().includes('remote');
-
             const isExpanded = !!expanded[job.slug];
 
             return (
               <article className="job-card" key={job.slug}>
                 <div className="job-card-header">
+                  {/* colored letter avatar since we don't have company logos */}
                   <div className="job-avatar" style={{ background: bg, color: fg }}>
                     {(job.company_name?.[0] ?? '?').toUpperCase()}
                   </div>
@@ -100,6 +105,7 @@ const Search = () => {
                   {isRemote && <span className="tag-remote">Remote</span>}
                 </div>
 
+                {/* description is clamped by css until the user expands it */}
                 <p className={`job-desc-preview${isExpanded ? ' job-desc-expanded' : ''}`}>
                   {stripHtml(job.description)}
                 </p>

@@ -1,7 +1,9 @@
 import React from 'react'
 import './Modal.css'
 
+// renders a full job detail overlay when isOpen is true
 const Modal = ({ isOpen, onClose, job }) => {
+  // nothing to show if the modal is closed or no job was passed
   if (!isOpen || !job) return null;
 
   return (
@@ -11,6 +13,7 @@ const Modal = ({ isOpen, onClose, job }) => {
         <p className="modal-company">{job.company_name}</p>
         <h2 className="modal-title">{job.title}</h2>
         {job.location && <p className="modal-location">{job.location}</p>}
+        {/* description can contain html from the api so we render it raw */}
         <div className="modal-description" dangerouslySetInnerHTML={{ __html: job.description }} />
         <a className="job-apply-btn" href={job.url} target="_blank" rel="noreferrer">Apply →</a>
       </div>

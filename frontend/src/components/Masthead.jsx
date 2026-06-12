@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../assets/jobs_logo.png';
 import { useAuth } from '../context/AuthContext';
 
+// top nav — shows user info + sign out when logged in, or sign in/up buttons when not
 const Masthead = () => {
   const navigate = useNavigate();
   const {currentUser, logout } = useAuth();
@@ -20,6 +21,7 @@ const Masthead = () => {
         {currentUser ? (
           <>
             <div className="nav-user">
+              {/* fall back from display name to email initial if no display name is set */}
               <div className="nav-avatar">
                 {(currentUser.displayName?.[0] ?? currentUser.email?.[0] ?? '?').toUpperCase()}
               </div>

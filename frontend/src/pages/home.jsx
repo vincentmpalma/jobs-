@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
 import Masthead from '../components/Masthead';
 
+// build the dropdown options from the currencies json file
 const currencyOptions = Object.values(currencies).map(c => ({
   value: c.code,
   label: `${c.code} — ${c.name}`
@@ -17,6 +18,7 @@ const Home = () => {
 
   const navigate = useNavigate();
 
+  // push the search params into the url and navigate to the results page
   const submitSearch = (e) => {
     e.preventDefault();
     navigate(`/search?title=${title}`);
@@ -41,6 +43,7 @@ const Home = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
             <div className="search-bar-divider" />
+            {/* location is disabled when remote-only is selected */}
             <input
               className="search-input"
               type="text"
@@ -53,6 +56,7 @@ const Home = () => {
           </div>
 
           <div className="filter-row">
+            {/* radio chips for filtering all / remote only / on-site */}
             <div className="filter-chips">
               {[
                 { value: 'include', label: 'All Jobs' },
@@ -67,6 +71,7 @@ const Home = () => {
                     checked={isRemote === value}
                     onChange={(e) => {
                       setIsRemote(e.target.value);
+                      // clear location when switching to remote-only
                       if (e.target.value === 'only') setLocation('');
                     }}
                   />
@@ -75,6 +80,7 @@ const Home = () => {
               ))}
             </div>
 
+            {/* salary range + currency selector, not wired to search yet */}
             <div className="salary-compact">
               <Select
                 options={currencyOptions}
